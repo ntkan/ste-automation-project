@@ -1,4 +1,4 @@
-  name: CI/CD pipline
+name: CI/CD pipline
 
 on:
   push:
