@@ -55,6 +55,7 @@ jobs:
 
   deploy:
     needs: test
+    if: ${{ always() }}
     runs-on: ubuntu-latest
 
     steps:
