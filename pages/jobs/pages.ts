@@ -1,6 +1,7 @@
 import { expect, Page } from "@playwright/test";
 import { JobAction } from "./actions";
 import { ElementHandler } from "@/components/element";
+import { SafeActions } from "@/utils/actionWrapper";
 
 const DATA_MAPPING = {
     "Mobile Phone Number": "0312345678",
@@ -24,16 +25,11 @@ export class JobPage {
     };
 
     async userGoToJobsPage(): Promise<void> {
-        await this.page.goto('/jobs');
+        await SafeActions.navigateToURL(this.page, '/jobs', "Access to jobs page");
     }
 
     async userSearchJob(title: string): Promise<void> {
         await this.jobAction.searchJob(title);
-    }
-
-    async selectEasyApplyJobFromSearchResults(): Promise<void> {
-        await this.jobAction.findEasyApplyJob();
-        await this.jobAction.clickApplyJobButton();
     }
 
     async verifyTheApplyToJobDialogVisible(): Promise<void> {
@@ -75,8 +71,12 @@ export class JobPage {
         await this.jobAction.clickNextButton();
     }
 
-    async userClickEasyApplyButton(): Promise<void> {
+    async userSelectEasyApplyFilter(): Promise<void> {
         await this.jobAction.clickEasyApplyOption();
+    }
+
+    async userClickEasyApplyButton(): Promise<void> {
+        await this.jobAction.clickApplyJobButton();
     }
 
     async fillInAllRequiredFieldsForApplyJobDialog(): Promise<void> {

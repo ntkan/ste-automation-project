@@ -14,7 +14,7 @@ export class LoginPage{
     }
 
     async userLoginByEmail(email: string, password: string): Promise<void> {
-        const isLoginFormVisible =  await this.loginActions.checkLoginFormVisible();
+        const isLoginFormVisible = await this.loginActions.checkLoginFormVisible();
         if(isLoginFormVisible){
             await this.userEnterCredentials(email, password);
             await this.userSubmitLogin();

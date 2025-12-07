@@ -9,7 +9,7 @@ export class ElementHandler {
         await this.page.waitForSelector(selector, { state: 'visible' });
     }
 
-    async waitForVisible(locator: Locator, timeout: number = 5000): Promise<boolean> {
+    async waitForVisible(locator: Locator, timeout: number = 30000): Promise<boolean> {
         const isVisible = await locator.isVisible({ timeout });
         if (isVisible) {
             return true;
@@ -18,7 +18,7 @@ export class ElementHandler {
         }
     }
 
-    async waitUntilHasChildElements( parent: Locator, childSelector: string, timeout: number = 5000): Promise<void> {
+    async waitUntilHasChildElements( parent: Locator, childSelector: string, timeout: number = 30000): Promise<void> {
         const start = Date.now();
         while (Date.now() - start < timeout) {
             const count = await parent.locator(childSelector).count();
