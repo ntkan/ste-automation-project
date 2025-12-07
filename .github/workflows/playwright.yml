@@ -20,6 +20,9 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      UI_LOGIN_USERNAME: ${{ secrets.UI_LOGIN_USERNAME }}
+      UI_LOGIN_PASSWORD: ${{ secrets.UI_LOGIN_PASSWORD }}
     permissions:
       contents: write
 
