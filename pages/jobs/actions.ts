@@ -49,21 +49,6 @@ export class JobAction {
             ActionLogger.error(`Failed to click apply job button`, { error });
         }
     }
-
-    async verifyApplyToJobDialogVisible(): Promise<void> {
-        ActionLogger.info('Verifying apply dialog visibility');
-        
-        const emailDropdown = this.page.locator(locators.emailLabel);
-        await SafeActions.waitForVisible(emailDropdown, 'email dropdown');
-
-        const phoneCountryDropdown = this.page.locator(locators.phoneCountryCodeLabel).locator("xpath=ancestor::div").first();
-        await SafeActions.waitForVisible(phoneCountryDropdown, 'phone country dropdown');
-
-        const phoneDropdown = this.page.locator(locators.phoneLabel).locator("xpath=ancestor::div").first();
-        await SafeActions.waitForVisible(phoneDropdown, 'phone dropdown');
-        
-        ActionLogger.info('Apply dialog verification completed');
-    }
     async getRequiredFields(): Promise<Record<string, Record<string, Locator>>> {
         ActionLogger.info('Extracting required fields');
         
@@ -219,8 +204,18 @@ export class JobAction {
         ActionLogger.info('Invalid resume message verified', { message });
     }
 
-    async requireresumeMessageShouldBeVisible(): Promise<void> {
+    async requireresumeMessageShouldBeVisible(message: string): Promise<void> {
         await SafeActions.waitForVisible(this.page.locator(locators.requireresumeMessage), 'require resume message');
+        const requireresumeMessage = this.page.locator(locators.requireresumeMessage);
+        await SafeActions.waitForVisible(requireresumeMessage, 'require resume message');
+        
+        const actualMessage = await requireresumeMessage.innerText();
+        if (actualMessage !== message) {
+            ActionLogger.error('Invalid resume message mismatch', { expected: message, actual: actualMessage });
+            throw new Error(`Expected message "${message}", but got "${actualMessage}"`);
+        }
+        
+        ActionLogger.info('Require resume message verified', { message });
     }
 
     async reviewApplicationButtonShouldBeVisible(): Promise<void> {
@@ -251,8 +246,14 @@ export class JobAction {
         await SafeActions.click(this.page.getByRole('button', { name: locators.nextButton }), 'click next button');
     }
 
-    async clickEasyApplyOption(): Promise<void> {
-        await SafeActions.click(this.page.locator(locators.easyApplyFilter), 'click easy apply filter');
+    async setEasyApplyButtonIsTrue(): Promise<void> {
+        await expect(this.page.locator(locators.filterButton)).toBeVisible({timeout: 30000});
+        await SafeActions.click(this.page.locator(locators.filterButton), 'click filter button');
+        await this.page.waitForTimeout(5000)
+        const easyApplyOption = this.page.locator(locators.enableEasyApplyButton)
+        await easyApplyOption.scrollIntoViewIfNeeded()
+        await SafeActions.click(this.page.locator(locators.enableEasyApplyButton), 'enable easy apply toggled');
+        await SafeActions.click(this.page.locator(locators.applyFilterButton), 'click button to show result');
     }
 
     async clearDocumentButtonShouldBeVisible(): Promise<void> {

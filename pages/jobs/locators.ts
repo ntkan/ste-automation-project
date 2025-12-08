@@ -1,5 +1,5 @@
 export const locators = {
-    searchJobInput: 'input[placeholder="Title, skill or Company"]',
+    searchJobInput: 'input[id*="jobs-search-box-keyword-id"]',
     selectedJob: 'jobs-search__job-details',
     jobDetailTopCard: '//div[contains(@class, "job-details-jobs-unified-top-card__container")]',
     applyButton: '#jobs-apply-button-id',
@@ -17,6 +17,9 @@ export const locators = {
     uploadedFileName: '//span[text()="Be sure to include an updated resume"]/following-sibling::div//h3',
     nextButton: 'Next',
     easyApplyFilter: '#searchFilter_applyWithLinkedin',
+    filterButton: 'button[aria-label*="Show all filters"]',
+    applyFilterButton: 'button[aria-label*="Apply current filters"]',
+    enableEasyApplyButton: '//h3[text()="Easy Apply"]/following-sibling::div/div/label/following-sibling::input',
     requireresumeMessage: '//span[text()="A resume is required"]',
     invalidResumeMessage: '//div[@class="jobs-document-upload-redesign-card__error"]//span/span',
     removeDocument: 'Clear document',

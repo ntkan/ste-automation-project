@@ -72,7 +72,7 @@ export class JobPage {
     }
 
     async userSelectEasyApplyFilter(): Promise<void> {
-        await this.jobAction.clickEasyApplyOption();
+        await this.jobAction.setEasyApplyButtonIsTrue();
     }
 
     async userClickEasyApplyButton(): Promise<void> {
@@ -124,8 +124,8 @@ export class JobPage {
         await this.jobAction.reviewApplicationButtonShouldNotBeVisible();
     }
 
-    async verifyRequireResumeMessage(): Promise<void> {
-        await this.jobAction.requireresumeMessageShouldBeVisible();
+    async verifyRequireResumeMessage(message: string): Promise<void> {
+        await this.jobAction.requireresumeMessageShouldBeVisible(message);
     };
 
     async verifyMessageUploadResumeInvalid(message: string): Promise<void> {

@@ -24,9 +24,9 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     baseURL: process.env.BASE_URL || 'https://www.linkedin.com',
-    headless: true,
+    headless: false,
     actionTimeout: process.env.ACTION_TIMEOUT ? parseInt(process.env.ACTION_TIMEOUT) : 30000,
-    // storageState: 'storageState.json',
+    storageState: 'storageState.json',
 
   },
   reporter: [
@@ -53,20 +53,20 @@ export default defineConfig({
     // },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['iPhone 13'] },
-    // },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['iPhone 13'] },
+    },
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },
     // },
 
     /* Test against branded browsers. */
-    {
-      name: 'Microsoft Edge',
-      use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    },
+    // {
+    //   name: 'Microsoft Edge',
+    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    // },
     // {
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },

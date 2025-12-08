@@ -13,7 +13,8 @@ const TEST_DATA = {
         oversized: 'sample-resume-2mb.pdf'
     },
     errorMessages: {
-        oversizedFile: "Please upload a smaller file (2 MB or less). Change file"
+        oversizedFile: "Please upload a smaller file (2 MB or less). Change file",
+        requireMessage: "A resume is required"
     }
 };
 
@@ -58,17 +59,17 @@ test.describe('Job Tests', {tag: ['@jobs', '@apply']},  () => {
         await jobPage.fillInAllRequiredFieldsForApplyJobDialog();
         await jobPage.userClickNextButton();
         await jobPage.userClickReviewApplicationButton();
-        await jobPage.verifyRequireResumeMessage();
+        await jobPage.verifyRequireResumeMessage(TEST_DATA.errorMessages.requireMessage);
     })
 
     test('Verify the error should appear if update resume more than 2MB', {tag: ["@apply_1_004"]}, async ({ page }) => {
         await performJobSearch();
         await jobPage.fillInAllRequiredFieldsForApplyJobDialog();
         await jobPage.userClickNextButton();
-        const filePath = path.resolve(process.cwd(), 'resources', 'sample-files', 'sample-resume-2mb.pdf');
+        const filePath = path.resolve(process.cwd(), 'resources', 'sample-files', TEST_DATA.resumeFiles.oversized);
         await jobPage.userUploadResume(filePath);
-        await jobPage.verifyResumeUploadSuccess('sample-resume-2mb.pdf');
-        await jobPage.verifyMessageUploadResumeInvalid("Please upload a smaller file (2 MB or less). Change file");
+        await jobPage.verifyResumeUploadSuccess(TEST_DATA.resumeFiles.oversized);
+        await jobPage.verifyMessageUploadResumeInvalid(TEST_DATA.errorMessages.oversizedFile);
         await jobPage.verifyRemoveDocument();
     })
 });
