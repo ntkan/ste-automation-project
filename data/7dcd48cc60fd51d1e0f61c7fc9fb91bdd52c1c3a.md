@@ -1,7 +1,7 @@
 # Test info
 
-- Name: Job Tests >> Verify the error should appear if update resume more than 2MB
-- Location: /home/runner/work/ste-automation-project/ste-automation-project/tests/jobs/apply.spec.ts:65:9
+- Name: Job Tests >> Verify the error should appear if submit apply that resume is empty
+- Location: /home/runner/work/ste-automation-project/ste-automation-project/tests/jobs/apply.spec.ts:57:9
 
 # Error details
 
@@ -17,9 +17,9 @@ Browser logs:
 ╚════════════════════════════════════════════════════════════════════════════════════════════════╝
 Call log:
   - <launching> /home/runner/.cache/ms-playwright/webkit-2158/pw_run.sh --inspector-pipe --no-startup-window
-  - <launched> pid=5826
-  - [pid=5826][err]
-  - [pid=5826][err] (process:5832): Gtk-WARNING **: 14:16:46.197: Failed to open display
+  - <launched> pid=5645
+  - [pid=5645][err]
+  - [pid=5645][err] (process:5651): Gtk-WARNING **: 14:28:39.877: Failed to open display
 
 ```
 
@@ -82,7 +82,8 @@ Call log:
   54 |         await jobPage.verifyJobApplicationSuccess();
   55 |     })
   56 |
-  57 |     test('Verify the error should appear if submit apply that resume is empty', {tag: ["@apply_1_003"]}, async ({ page }) => {
+> 57 |     test('Verify the error should appear if submit apply that resume is empty', {tag: ["@apply_1_003"]}, async ({ page }) => {
+     |         ^ Error: browserType.launch: Target page, context or browser has been closed
   58 |         await performJobSearch();
   59 |         await jobPage.fillInAllRequiredFieldsForApplyJobDialog();
   60 |         await jobPage.userClickNextButton();
@@ -90,8 +91,7 @@ Call log:
   62 |         await jobPage.verifyRequireResumeMessage(TEST_DATA.errorMessages.requireMessage);
   63 |     })
   64 |
-> 65 |     test('Verify the error should appear if update resume more than 2MB', {tag: ["@apply_1_004"]}, async ({ page }) => {
-     |         ^ Error: browserType.launch: Target page, context or browser has been closed
+  65 |     test('Verify the error should appear if update resume more than 2MB', {tag: ["@apply_1_004"]}, async ({ page }) => {
   66 |         await performJobSearch();
   67 |         await jobPage.fillInAllRequiredFieldsForApplyJobDialog();
   68 |         await jobPage.userClickNextButton();
